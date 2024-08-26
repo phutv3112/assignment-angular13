@@ -21,6 +21,8 @@
     "@types/select2": "^4.0.63",
     "bootstrap": "^5.3.3",
     "jquery": "^3.7.1",
+    "primeicons": "^7.0.0",
+    "primeng": "^13.4.1",
     "rxjs": "~7.5.0",
     "select2": "^4.1.0-rc.0",
     "tslib": "^2.3.0",

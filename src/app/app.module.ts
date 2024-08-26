@@ -8,6 +8,8 @@ import { CreateBookComponent } from './features/books/create-book/create-book.co
 import { UpdateBookComponent } from './features/books/update-book/update-book.component';
 import { ViewBookComponent } from './features/books/view-book/view-book.component';
 import { EnumDescriptionPipe } from './pipes/enum-description.pipe';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { EnumDescriptionPipe } from './pipes/enum-description.pipe';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

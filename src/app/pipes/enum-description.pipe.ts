@@ -1,12 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'enumDescription'
+  name: 'enumDescription',
 })
 export class EnumDescriptionPipe implements PipeTransform {
-
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(code: string, enumItems: any[]): string {
+    const matchedItem = enumItems.find((item) => item.key === code);
+    return matchedItem ? matchedItem.value : '';
   }
-
 }
