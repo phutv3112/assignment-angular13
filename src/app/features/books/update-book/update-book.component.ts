@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BookDto } from 'src/app/models/books/book.dto';
 import { BookService } from '../services/book.service';
 import { BookRequestDto } from 'src/app/models/books/book-request.dto';
+import { BookTypeEnum } from 'src/app/enums/book-type.enum';
 
 @Component({
   selector: 'app-update-book',
@@ -12,6 +13,7 @@ import { BookRequestDto } from 'src/app/models/books/book-request.dto';
 export class UpdateBookComponent implements OnInit {
   model: BookRequestDto;
   id!: number;
+  BookTypeEnum!: typeof BookTypeEnum;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +26,7 @@ export class UpdateBookComponent implements OnInit {
       type: '',
       locked: false,
     };
+     this.BookTypeEnum = BookTypeEnum;
   }
 
   ngOnInit(): void {
@@ -33,10 +36,9 @@ export class UpdateBookComponent implements OnInit {
         next: (book) => {
           this.model = book;
           this.id = bookId;
-        }
+        },
       });
     }
-
   }
 
   onSubmit(): void {

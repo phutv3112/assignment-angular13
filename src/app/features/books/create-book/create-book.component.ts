@@ -6,6 +6,7 @@ import 'select2';
 import { BookDto } from 'src/app/models/books/book.dto';
 import { BookService } from '../services/book.service';
 import { BookRequestDto } from 'src/app/models/books/book-request.dto';
+import { BookTypeEnum } from 'src/app/enums/book-type.enum';
 
 @Component({
   selector: 'app-create-book',
@@ -14,16 +15,19 @@ import { BookRequestDto } from 'src/app/models/books/book-request.dto';
 })
 export class CreateBookComponent implements OnInit {
   model: BookRequestDto;
+  BookTypeEnum!: typeof BookTypeEnum;
 
   constructor(private route: ActivatedRoute, private router: Router,
     private bookService: BookService
   ) {
+    this.BookTypeEnum = BookTypeEnum;
     this.model = {
       author: '',
       name: '',
-      type: '',
+      type: this.BookTypeEnum.All[0].code,
       locked: false,
     };
+
   }
 
   ngOnInit(): void {
