@@ -2,28 +2,27 @@
   <h1>View Book</h1>
   <div>
     <div class="mt-2 row">
-      <div class="col-1">Name</div>
-      <div class="col-9">saghoiar</div>
+      <div class="col-2">Name</div>
+      <div class="col-9">{{ book.name }}</div>
     </div>
     <div class="mt-2 row">
-      <div class="col-1">Type</div>
-      <div class="col-9">saghoiar</div>
+      <div class="col-2">Type</div>
+      <div class="col-9">{{ book.type }}</div>
     </div>
     <div class="mt-2 row">
-      <div class="col-1">Author</div>
-      <div class="col-9">saghoiar</div>
+      <div class="col-2">Author</div>
+      <div class="col-9">{{ book.author }}</div>
     </div>
     <div class="mt-2 row">
-      <div class="col-1">Locked</div>
+      <div class="col-2">Locked</div>
       <div class="col-9">
-
-        <input type="checkbox" disabled>
+        <input type="checkbox" class="form-check-input" [checked]="book.locked" disabled>
       </div>
     </div>
   </div>
   <div class="mt-2 d-flex justify-content-end">
-    <a class="btn border border-warning mx-2 text-warning" [routerLink]="['/books/update/1']"><i class="fas fa-pen"></i> Update</a>
-    <button class="btn border border-danger mx-2 text-danger"><i class="fas fa-times"></i> Delete</button>
+    <a class="btn border border-warning mx-2 text-warning" [routerLink]="['/books/update', book.id]"><i class="fas fa-pen"></i> Update</a>
+    <button class="btn border border-danger mx-2 text-danger" (click)="confirmDelete(book.id)"><i class="fas fa-times"></i> Delete</button>
     <button class="btn border border-secondary mx-2 text-secondary" [routerLink]="['/books']"><i class="fas fa-undo"></i> Back</button>
   </div>
 </div>
