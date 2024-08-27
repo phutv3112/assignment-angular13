@@ -13,9 +13,25 @@ export class BookListComponent implements OnInit {
   constructor(private bookService: BookService) {}
 
   ngOnInit(): void {
-    this.books = this.bookService.getBooks();
+    this.bookService.getBooks().subscribe((books) => {
+      this.books = books;
+    });
   }
-  reloadData(){
-    this.books = this.bookService.getBooks();
+  reloadData() {
+    this.bookService.getBooks().subscribe((books) => {
+      this.books = books;
+    });
+  }
+  confirmDelete(id: number): void {
+    const confirmed = confirm('Are you sure you want to delete this book?');
+    if (confirmed) {
+      this.bookService.deleteBook(id).subscribe({
+        next: () => {
+          this.reloadData();
+        },
+      });
+    }else{
+      this.reloadData();
+    }
   }
 }

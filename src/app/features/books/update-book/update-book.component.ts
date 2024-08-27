@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookDto } from 'src/app/models/books/book.dto';
 import { BookService } from '../services/book.service';
+import { BookRequestDto } from 'src/app/models/books/book-request.dto';
 
 @Component({
   selector: 'app-update-book',
@@ -9,8 +10,8 @@ import { BookService } from '../services/book.service';
   styleUrls: ['./update-book.component.css'],
 })
 export class UpdateBookComponent implements OnInit {
-  model: BookDto;
-  id: number | null = null;
+  model: BookRequestDto;
+  id!: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,7 +19,6 @@ export class UpdateBookComponent implements OnInit {
     private bookService: BookService
   ) {
     this.model = {
-      id: 0,
       author: '',
       name: '',
       type: '',
@@ -29,21 +29,21 @@ export class UpdateBookComponent implements OnInit {
   ngOnInit(): void {
     const bookId = Number(this.route.snapshot.paramMap.get('id'));
     if (bookId) {
-      var bookFound = this.bookService.getBookById(bookId);
-      if (bookFound) {
-        this.model = bookFound;
-      }
+      this.bookService.getBookById(bookId).subscribe({
+        next: (book) => {
+          this.model = book;
+          this.id = bookId;
+        }
+      });
     }
+
   }
 
   onSubmit(): void {
-    // Handle form submission logic here
-    console.log('Form submitted with model:', this.model);
-    alert('Update book');
-    // Implement your form submission logic, e.g., sending the data to a server
-    // this.bookService.createOrUpdateBook(this.model).subscribe(response => {
-    //   // Handle response
-    //   this.router.navigate(['/books']);
-    // });
+    this.bookService.updateBook(this.id, this.model).subscribe({
+      next: (res) => {
+        this.router.navigate(['/books']);
+      },
+    });
   }
 }

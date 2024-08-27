@@ -17,17 +17,12 @@ export class ViewBookComponent implements OnInit {
   ngOnInit(): void {
     const bookId = Number(this.route.snapshot.paramMap.get('id'));
     if (bookId){
-      var bookFound = this.bookService.getBookById(bookId);
-      if(bookFound){
-        this.book = bookFound;
-      }else{
-        this.book = {
-          id: 0,
-          name: 'Sample Book Name',
-          type: 'Sample Type',
-          author: 'Sample Author',
-          locked: true,
-        };
+      if (bookId) {
+        this.bookService.getBookById(bookId).subscribe({
+          next: (res) => {
+            this.book = res;
+          },
+        });
       }
     }
   }

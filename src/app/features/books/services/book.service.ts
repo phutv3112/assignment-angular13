@@ -1,5 +1,9 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { BookRequestDto } from 'src/app/models/books/book-request.dto';
 import { BookDto } from 'src/app/models/books/book.dto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,13 +15,37 @@ export class BookService {
     { id: 3, name: 'SQL', type: 'SQL', author: 'HoangPD14', locked: true },
   ];
 
-  constructor() {}
+  private apiUrl = `${environment.apiBase}/api/books`;
 
-  getBooks(): BookDto[] {
-    return this.books;
+  constructor(private http: HttpClient) {}
+
+  getBooks(): Observable<BookDto[]> {
+    return this.http.get<BookDto[]>(this.apiUrl);
   }
 
-  getBookById(id: number): BookDto | undefined {
-    return this.books.find((book) => book.id === id);
+  getBookById(id: number): Observable<BookDto> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<BookDto>(url);
+  }
+
+  createBook(book: BookRequestDto): Observable<BookDto> {
+    return this.http.post<BookDto>(this.apiUrl, book, this.getHttpOptions());
+  }
+
+  updateBook(id: number, book: BookRequestDto): Observable<void> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<void>(url, book, this.getHttpOptions());
+  }
+
+  deleteBook(id: number): Observable<void> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<void>(url, this.getHttpOptions());
+  }
+  private getHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
   }
 }

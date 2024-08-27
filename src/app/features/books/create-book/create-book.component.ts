@@ -1,8 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as $ from 'jquery';
 import 'select2';
 import { BookDto } from 'src/app/models/books/book.dto';
+import { BookService } from '../services/book.service';
+import { BookRequestDto } from 'src/app/models/books/book-request.dto';
 
 @Component({
   selector: 'app-create-book',
@@ -10,12 +13,12 @@ import { BookDto } from 'src/app/models/books/book.dto';
   styleUrls: ['./create-book.component.css'],
 })
 export class CreateBookComponent implements OnInit {
-  model: BookDto;
-  id: number | null = null;
+  model: BookRequestDto;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router,
+    private bookService: BookService
+  ) {
     this.model = {
-      id: 0,
       author: '',
       name: '',
       type: '',
@@ -26,17 +29,12 @@ export class CreateBookComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-
   onSubmit(): void {
-    // Handle form submission logic here
-    console.log('Form submitted with model:', this.model);
-    alert('Form submitted with model:');
-
-    // Implement your form submission logic, e.g., sending the data to a server
-    // this.bookService.createOrUpdateBook(this.model).subscribe(response => {
-    //   // Handle response
-    //   this.router.navigate(['/books']);
-    // });
+    this.bookService.createBook(this.model).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.router.navigate(['/books']);
+      }
+    })
   }
 }
