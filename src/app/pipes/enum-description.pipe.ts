@@ -11,5 +11,6 @@ export class EnumDescriptionPipe implements PipeTransform {
     }
     const item = enumItems.find((e) => e.code === code);
     return item ? item.name : null;
+
   }
 }

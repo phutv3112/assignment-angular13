@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiBase: 'https://localhost:7070',
+  //apiBase: 'https://localhost:7070',
+  apiBase: 'https://bookangularapi.azurewebsites.net',
 };
 
 /*
